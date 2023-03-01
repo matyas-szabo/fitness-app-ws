@@ -3,11 +3,12 @@ package com.example.fitnessappws.dao;
 import com.example.fitnessappws.model.Exercise;
 
 import java.util.List;
+import java.util.Optional;
 
 public interface ExerciseDAO {
     void addExercise(Exercise exercise);
 
-    Exercise getExercise(int id);
+    Optional<Exercise> getExercise(int id);
 
     List<Exercise> getAllExercises();
 

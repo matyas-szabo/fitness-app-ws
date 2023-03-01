@@ -2,10 +2,12 @@ package com.example.fitnessappws.mapper;
 
 import com.example.fitnessappws.model.Exercise;
 import org.springframework.jdbc.core.RowMapper;
+import org.springframework.stereotype.Component;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
+@Component
 public class ExerciseMapper implements RowMapper<Exercise> {
     @Override
     public Exercise mapRow(ResultSet rs, int rowNum) throws SQLException {
