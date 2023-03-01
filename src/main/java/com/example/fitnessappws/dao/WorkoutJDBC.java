@@ -51,6 +51,12 @@ public class WorkoutJDBC implements WorkoutDAO {
     }
 
     @Override
+    public List<Workout> listWorkoutsByName(String name) {
+        String sql = "SELECT * FROM workout WHERE name = ?";
+        return jdbcTemplate.query(sql, workoutMapper, name);
+    }
+
+    @Override
     public void updateWorkout(Workout workout, int id) {
         String sql = "UPDATE workout SET name = ?, duration = ?, difficulty = ? " +
                 "WHERE id = ?";

@@ -13,6 +13,8 @@ public interface WorkoutDAO {
 
     List<Workout> getAllWorkouts();
 
+    List<Workout> listWorkoutsByName(String name);
+
     void updateWorkout(Workout workout, int id);
 
     void deleteWorkout(int id);
