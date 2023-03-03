@@ -23,9 +23,9 @@ public class WorkoutController {
         return workoutDAO.getAllWorkouts();
     }
 
-    @GetMapping(value = "q")
-    public List<Workout> listWorkoutsByName(@RequestParam("q") String name) {
-        return workoutDAO.listWorkoutsByName(name);
+    @RequestMapping(params = {"q"}, method = RequestMethod.GET)
+    public List<Workout> listWorkoutsByName(@RequestParam(value = "q") String q) {
+        return workoutDAO.listWorkoutsByName(q);
     }
 
     @GetMapping("/{id}")
