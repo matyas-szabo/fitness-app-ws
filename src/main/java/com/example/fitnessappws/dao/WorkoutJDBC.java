@@ -5,9 +5,14 @@ import com.example.fitnessappws.model.Workout;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.jdbc.support.GeneratedKeyHolder;
+import org.springframework.jdbc.support.KeyHolder;
 import org.springframework.stereotype.Repository;
 
+import java.sql.PreparedStatement;
+import java.sql.Statement;
 import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
 
 @Repository
@@ -22,13 +27,18 @@ public class WorkoutJDBC implements WorkoutDAO {
     }
 
     @Override
-    public void addWorkout(Workout workout) {
+    public long addWorkout(Workout workout) {
+        KeyHolder keyHolder = new GeneratedKeyHolder();
         String sql = "INSERT INTO workout (name, duration, difficulty) " +
                 "VALUES (?,?,?);";
-        jdbcTemplate.update(sql, workout.getName(),
-                workout.getDuration(),
-                workout.getDifficulty());
-
+        jdbcTemplate.update(connection -> {
+            PreparedStatement ps = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
+            ps.setString(1, workout.getName());
+            ps.setInt(2, workout.getDuration());
+            ps.setObject(3, workout.getDifficulty().toString());
+            return ps;
+        }, keyHolder);
+        return Objects.requireNonNull(keyHolder.getKey()).longValue();
     }
 
     @Override

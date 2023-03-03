@@ -1,6 +1,7 @@
 package com.example.fitnessappws.mapper;
 
 import com.example.fitnessappws.model.Exercise;
+import com.example.fitnessappws.model.MuscleGroup;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Component;
 
@@ -14,8 +15,8 @@ public class ExerciseMapper implements RowMapper<Exercise> {
         Exercise exercise = new Exercise();
         exercise.setId(rs.getInt("id"));
         exercise.setName(rs.getString("name"));
-        exercise.setCalories_burned(rs.getInt("calories_burned"));
-        exercise.setMuscle_group(rs.getString("muscle_group"));
+        exercise.setCaloriesBurned(rs.getInt("calories_burned"));
+        exercise.setMuscleGroup(MuscleGroup.valueOf(rs.getString("muscle_group")));
 
         return exercise;
     }

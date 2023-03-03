@@ -35,8 +35,8 @@ public class WorkoutController {
     }
 
     @PostMapping
-    public void addWorkout(@RequestBody Workout workout) {
-        workoutDAO.addWorkout(workout);
+    public long addWorkout(@RequestBody Workout workout) {
+        return workoutDAO.addWorkout(workout);
     }
 
     @DeleteMapping("/{id}")

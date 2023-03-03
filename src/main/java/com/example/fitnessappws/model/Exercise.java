@@ -10,7 +10,13 @@ import lombok.NoArgsConstructor;
 public class Exercise {
     private int id;
     private String name;
-    private int calories_burned;
-    private String muscle_group;
+    private int caloriesBurned;
+    private MuscleGroup muscleGroup;
 
+    public Exercise(int id, String name, int calories_burned, String muscleGroup) {
+        this.id = id;
+        this.name = name;
+        this.caloriesBurned = calories_burned;
+        this.setMuscleGroup(MuscleGroup.valueOf(muscleGroup));
+    }
 }

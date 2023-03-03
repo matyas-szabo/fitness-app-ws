@@ -11,7 +11,12 @@ public class Workout {
     private int id;
     private String name;
     private int duration;
-    private String difficulty;
+    private Difficulty difficulty;
 
-
+    public Workout(int id, String name, int duration, String difficulty) {
+        this.id = id;
+        this.name = name;
+        this.duration = duration;
+        this.setDifficulty(Difficulty.valueOf(difficulty));
+    }
 }

@@ -7,7 +7,7 @@ import java.util.Optional;
 
 public interface WorkoutDAO {
 
-    void addWorkout(Workout workout);
+    long addWorkout(Workout workout);
 
     Optional<Workout> getWorkout(int id);
 

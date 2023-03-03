@@ -1,6 +1,7 @@
 package com.example.fitnessappws.mapper;
 
 
+import com.example.fitnessappws.model.Difficulty;
 import com.example.fitnessappws.model.Workout;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Component;
@@ -16,7 +17,7 @@ public class WorkoutMapper implements RowMapper<Workout> {
         workout.setId(rs.getInt("id"));
         workout.setName(rs.getString("name"));
         workout.setDuration(rs.getInt("duration"));
-        workout.setDifficulty(rs.getString("difficulty"));
+        workout.setDifficulty(Difficulty.valueOf(rs.getString("difficulty")));
 
         return workout;
     }

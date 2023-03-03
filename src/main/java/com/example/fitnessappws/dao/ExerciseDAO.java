@@ -6,7 +6,7 @@ import java.util.List;
 import java.util.Optional;
 
 public interface ExerciseDAO {
-    void addExercise(Exercise exercise);
+    long addExercise(Exercise exercise);
 
     Optional<Exercise> getExercise(int id);
 

@@ -5,9 +5,14 @@ import com.example.fitnessappws.model.Exercise;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.jdbc.support.GeneratedKeyHolder;
+import org.springframework.jdbc.support.KeyHolder;
 import org.springframework.stereotype.Repository;
 
+import java.sql.PreparedStatement;
+import java.sql.Statement;
 import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
 
 @Repository
@@ -22,13 +27,18 @@ public class ExerciseJDBC implements ExerciseDAO {
     }
 
     @Override
-    public void addExercise(Exercise exercise) {
+    public long addExercise(Exercise exercise) {
+        KeyHolder keyHolder = new GeneratedKeyHolder();
         String sql = "INSERT INTO exercise (name, calories_burned, muscle_group) " +
                 "VALUES (?,?,?);";
-        jdbcTemplate.update(sql, exercise.getName(),
-                exercise.getCalories_burned(),
-                exercise.getMuscle_group());
-
+        jdbcTemplate.update(connection -> {
+            PreparedStatement ps = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
+            ps.setString(1, exercise.getName());
+            ps.setInt(2, exercise.getCaloriesBurned());
+            ps.setObject(3, exercise.getMuscleGroup().toString());
+            return ps;
+        }, keyHolder);
+        return Objects.requireNonNull(keyHolder.getKey()).longValue();
     }
 
     @Override
@@ -54,8 +64,8 @@ public class ExerciseJDBC implements ExerciseDAO {
     public void updateExercise(Exercise exercise, int id) {
         String sql = "UPDATE exercise SET name = ?, calories_burned = ?, muscle_group = ? " +
                 "WHERE id = ?";
-        jdbcTemplate.update(sql, exercise.getName(), exercise.getCalories_burned(),
-                exercise.getMuscle_group(), id);
+        jdbcTemplate.update(sql, exercise.getName(), exercise.getCaloriesBurned(),
+                exercise.getMuscleGroup(), id);
     }
 
     @Override
