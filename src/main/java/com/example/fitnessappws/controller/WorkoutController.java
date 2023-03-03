@@ -23,11 +23,10 @@ public class WorkoutController {
         return workoutDAO.getAllWorkouts();
     }
 
-    @GetMapping
+    @GetMapping(value = "q")
     public List<Workout> listWorkoutsByName(@RequestParam("q") String name) {
         return workoutDAO.listWorkoutsByName(name);
     }
-
 
     @GetMapping("/{id}")
     public Optional<Workout> getWorkoutById(@PathVariable("id") int id) {
